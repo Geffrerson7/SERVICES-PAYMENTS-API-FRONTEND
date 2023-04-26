@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Route, Routes, Navigate } from 'react-router-dom'
 import './App.css' 
-import { Layout, CreatePayment, List, CreateService, NotFound, ExpiratedList, Login, Logout } from './components'
+import { Layout, CreatePayment, List, CreateService, NotFound, ExpiratedList, Login, Register } from './components'
 
 
 function App() {
@@ -16,6 +16,7 @@ function App() {
         <Route path='/services' element={<CreateService />}/>
       </Route>
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
       <Route path='*' element={<NotFound />}/>
     </Routes>
   )

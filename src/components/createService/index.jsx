@@ -28,8 +28,8 @@ function CreateService() {
             }).then((response) => {
                 if (response.ok) {
                     Swal.fire(
-                        '¡Creado!',
-                        'Los datos se guardaron correctamente',
+                        'Created!',
+                        'The service was created successfully.',
                         'success'
                     ).then((result) => {
                         if (result.isConfirmed) {
@@ -41,7 +41,7 @@ function CreateService() {
                     Swal.fire({
                         icon: "error",
                         title: 'Oops...',
-                        text: "¡Ocurrió un error!"
+                        text: "An error occurred!"
                     })
                 }
             });
@@ -103,7 +103,7 @@ function CreateService() {
             body: JSON.stringify(selectedService),
         }).then((response) => {
             if (response.ok) {
-                Swal.fire("¡Actualizado!", "Los datos se actualizaron correctamente", "success").then((result) => {
+                Swal.fire("Updated!", "The service was updated successfully.", "success").then((result) => {
                     if (result.isConfirmed) {
                         location.reload()
                     }
@@ -113,7 +113,7 @@ function CreateService() {
                 Swal.fire({
                     icon: "error",
                     title: "Oops...",
-                    text: "¡Ocurrió un error!",
+                    text: "An error occurred!",
                 });
             }
         })

@@ -48,8 +48,8 @@ function CreatePayment() {
             }).then((response) => {
                 if (response.ok) {
                     Swal.fire(
-                        '¡Creado!',
-                        'Los datos se guardaron correctamente',
+                        'Created!',
+                        'The payment was created successfully.',
                         'success'
                     ).then((result) => {
                         if (result.isConfirmed) {
@@ -61,7 +61,7 @@ function CreatePayment() {
                     Swal.fire({
                         icon: "error",
                         title: 'Oops...',
-                        text: "¡Ocurrió un error!"
+                        text: "An error occurred!"
                     })
                 }
             });

@@ -5,11 +5,11 @@ import userRole from '../../services/userRole';
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const navigate= useNavigate()
+    const navigate = useNavigate()
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const response = await fetch("http://127.0.0.1:8000/" + "user/token/", {
+        const response = await fetch("http://127.0.0.1:8000/user/token/", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -35,8 +35,8 @@ function Login() {
     };
 
     return (
-        <>
-            <div className="card">
+        <div className="h-screen flex items-center justify-center">
+            <div className="card shadow-lg w-[30%] m-auto">
                 <form className="p-4" onSubmit={handleSubmit}>
                     <label className="label">
                         Username:
@@ -52,15 +52,13 @@ function Login() {
                             className="input"
                             value={password} onChange={(e) => setPassword(e.target.value)} />
                     </label>
-                    <div className="botones">
-                        <button className="boton boton--negro" type="submit">Login</button>
-                        <button className="boton boton--gris">Cancel</button>
+                    <div className="flex flex-col items-center">
+                        <button className="boton bg-primaryDark text-dark mb-2" type="submit">Login</button>
+                        <button className="boton bg-primary text-light" onClick={() => navigate('/register')}>Register</button>
                     </div>
                 </form>
-                
             </div>
-        </>
-
+        </div>
 
     );
 }
