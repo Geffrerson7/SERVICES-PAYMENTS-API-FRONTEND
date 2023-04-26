@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../../services/memory";
 
@@ -6,13 +6,35 @@ function CreatePayment() {
     const [service, setService] = useState("");
     const [amount, setAmount] = useState("");
     const [expirationDate, setExpirationDate] = useState("");
+    const [cachedData, setCachedData] = useState({});
+    const [serviceOptions, setServiceOptions] = useState([])
+    const authTokens = JSON.parse(localStorage.getItem("authTokens"));
 
-    let authTokens = JSON.parse(localStorage.getItem("authTokens"));
+    useEffect(() => {
+        const fetchServices = async () => {
+            if (cachedData.serviceOptions) {
+                setServiceOptions(cachedData.serviceOptions)
+            } else {
+                const response = await fetch("http://127.0.0.1:8000/service/", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        "Authorization": "Bearer " + authTokens?.access,
+                    },
+                });
+                const data = await response.json();
+                setCachedData({ serviceOptions: data.results });
+                setServiceOptions(data.results);
+            }
+        }
+        fetchServices();
+    }, [authTokens, cachedData])
 
     let handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            let res = await fetch("https://payments-api-2fqe.onrender.com/api/v2/payments", {
+            let res = await fetch("http://127.0.0.1:8000/payment/", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -60,7 +82,7 @@ function CreatePayment() {
                     Service Name
                     <div>
                         <select className="input" value={service} onChange={(e) => setService(e.target.value)}>
-                            {ServiceOptions.map(option => <option value={option}>{option}</option>)}
+                            {serviceOptions.map(option => <option key={option.id} value={option.name}>{option.name}</option>)}
                         </select>
                     </div>
                 </label>
@@ -82,11 +104,12 @@ function CreatePayment() {
                         onChange={(e) => setExpirationDate(e.target.value)}
                     />
                 </label>
+                <div className="botones">
+                    <button className="boton boton--negro" type="submit">Create</button>
+                    <button className="boton boton--gris">Cancel</button>
+                </div>
             </form>
-            <div className="botones">
-                <button className="boton boton--negro" type="submit">Create</button>
-                <button className="boton boton--gris">Cancel</button>
-            </div>
+
         </div>
 
 

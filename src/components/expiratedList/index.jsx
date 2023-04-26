@@ -20,7 +20,7 @@ function ExpiratedList() {
                     },
                 });
                 const data = await response.json();
-                console.log(data.results)
+                
                 setCachedData({ expiratedPayments: data.results });
                 setExpiratedPayments(data.results);
             }
