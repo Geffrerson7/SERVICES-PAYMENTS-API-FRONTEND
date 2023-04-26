@@ -3,8 +3,8 @@ import { ReactComponent as CreatePaymentSVG } from '../../assets/img/payment.svg
 import { ReactComponent as ServicesSVG } from '../../assets/img/services.svg'
 import { ReactComponent as LogoutSVG } from '../../assets/img/logout.svg'
 import { ReactComponent as ExpiratedPaymentListSVG } from '../../assets/img/expirated-payment.svg'
-import WebLink from "../link";
-import Logout from '../logout'
+import WebLink from "../Link";
+import Logout from '../Logout'
 
 function Principal({ children }) {
     const userData = JSON.parse(localStorage.getItem("userData"));

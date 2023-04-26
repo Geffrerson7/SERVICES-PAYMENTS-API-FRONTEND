@@ -1,6 +1,6 @@
-import Header from "../header";
-import Principal from "../principal";
-import Footer from "../footer";
+import Header from "../Header";
+import Principal from "../Principal";
+import Footer from "../Footer";
 import { Outlet } from "react-router-dom";
 function Layout() {
     return (

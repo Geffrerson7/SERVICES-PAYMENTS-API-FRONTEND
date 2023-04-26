@@ -1,4 +1,4 @@
-import ExpiratedPayment from "../expiratedpayment";
+import ExpiratedPayment from "../ExpiratedPayment";
 import { useState, useEffect } from "react";
 
 function ExpiratedList() {

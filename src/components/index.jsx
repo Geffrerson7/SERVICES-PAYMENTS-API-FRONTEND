@@ -1,23 +1,23 @@
-export {default as Footer} from "./footer"
+export {default as Footer} from "./Footer"
 
-export {default as Header} from "./header"
+export {default as Header} from "./Header"
 
-export {default as Principal} from "./principal"
+export {default as Principal} from "./Principal"
 
-export {default as List} from "./list"
+export {default as List} from "./PaymentList"
 
-export { default as Layout} from "./layout"
+export { default as Layout } from "./Layout"
 
 export { default as CreatePayment } from "./CreatePayment"
 
-export { default as CreateService} from "./createService"
+export { default as CreateService} from "./CreateService"
 
-export { default as NotFound} from "./notFound"
+export { default as NotFound} from "./NotFound"
 
-export { default as ExpiratedList } from "./expiratedList"
+export { default as ExpiratedList } from "./ExpiratedList"
 
-export { default as Login } from  "./login"
+export { default as Login } from  "./Login"
 
-export { default as Logout } from  "./logout"
+export { default as Logout } from  "./Logout"
 
-export { default as Register } from  "./register"
+export { default as Register } from  "./Register"

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Payment from "../payment";
+import Payment from "../Payment";
 
 
 function List() {
