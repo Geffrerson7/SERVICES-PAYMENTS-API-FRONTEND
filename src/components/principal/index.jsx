@@ -6,22 +6,25 @@ import { ReactComponent as ExpiratedPaymentListSVG } from '../../assets/img/expi
 import WebLink from "../link";
 import Logout from '../logout'
 
-function Principal({children}){
+function Principal({ children }) {
+    const userData = JSON.parse(localStorage.getItem("userData"));
     return (
         <div className="principal">
             <aside className="aside">
                 <WebLink to="/lists-payment" text="Payments">
-                    <PaymentListSVG className="icon"/>
+                    <PaymentListSVG className="icon" />
                 </WebLink>
                 <WebLink to="/lists-expirated-payment" text="Expirated Payments">
-                    <ExpiratedPaymentListSVG className="icon"/>
+                    <ExpiratedPaymentListSVG className="icon" />
                 </WebLink>
                 <WebLink to="/create-payment" text="Create Payment">
-                    <CreatePaymentSVG className="icon"/>
+                    <CreatePaymentSVG className="icon" />
                 </WebLink>
-                <WebLink to="/services" text="Services">
-                    <ServicesSVG className="icon"/>
-                </WebLink>
+                {userData.is_superuser && (
+                    <WebLink to="/services" text="Services">
+                        <ServicesSVG className="icon" />
+                    </WebLink>
+                )}
                 <Logout />
             </aside>
             <main className="main">
