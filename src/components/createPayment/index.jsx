@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Context } from "../../services/memory";
+
 
 function CreatePayment() {
     const [service, setService] = useState("");
@@ -70,9 +69,7 @@ function CreatePayment() {
             console.log(err);
         }
     };
-
-    const ServiceOptions = ["Netflix", "Amazon Prime video", "HBO Max"]
-
+    
     return (
 
         <div className="card">
@@ -109,10 +106,7 @@ function CreatePayment() {
                     <button className="boton boton--gris">Cancel</button>
                 </div>
             </form>
-
         </div>
-
-
     );
 }
 

@@ -1,16 +1,20 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 
 function CreateService() {
+    const [newName, setNewName] = useState("");
+    const [newPrefixe, setNewPrefixe] = useState("");
+    const [newLogo, setNewLogo] = useState("");
     const [name, setName] = useState("");
     const [prefixe, setPrefixe] = useState("");
     const [logo, setLogo] = useState("");
-
-    let authTokens = JSON.parse(localStorage.getItem("authTokens"));
+    const [cachedData, setCachedData] = useState({});
+    const [serviceOptions, setServiceOptions] = useState([])
+    const authTokens = JSON.parse(localStorage.getItem("authTokens"));
 
     let handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            let res = await fetch("https://payments-api-2fqe.onrender.com/api/v2/payments", {
+            let res = await fetch("http://127.0.0.1:8000/service/crud/", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -18,9 +22,9 @@ function CreateService() {
                     'Authorization': 'Bearer ' + authTokens?.access
                 },
                 body: JSON.stringify({
-                    name: name,
-                    prefixe: prefixe,
-                    logo: logo,
+                    name: newName,
+                    prefixe: newPrefixe,
+                    logo: newLogo,
                 }),
             }).then((response) => {
                 if (response.ok) {
@@ -47,7 +51,27 @@ function CreateService() {
         }
     };
 
-    const ServiceOptions = ["Netflix", "Amazon Prime video", "HBO Max"]
+    useEffect(() => {
+        const fetchServices = async () => {
+            if (cachedData.serviceOptions) {
+                setServiceOptions(cachedData.serviceOptions)
+            } else {
+                const response = await fetch("http://127.0.0.1:8000/service/crud/", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        "Authorization": "Bearer " + authTokens?.access,
+                    },
+                });
+                const data = await response.json();
+                setCachedData({ serviceOptions: data.results });
+                setServiceOptions(data.results);
+            }
+        }
+        fetchServices();
+    }, [authTokens, cachedData])
+    
     return (
         <>
             <div className="card">
@@ -58,8 +82,8 @@ function CreateService() {
                         <input
                             type="string"
                             className="input"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            value={newName}
+                            onChange={(e) => setNewName(e.target.value)}
                         />
                     </label>
                     <label className="label">
@@ -67,8 +91,8 @@ function CreateService() {
                         <input
                             type="string"
                             className="input"
-                            value={prefixe}
-                            onChange={(e) => setPrefixe(e.target.value)}
+                            value={newPrefixe}
+                            onChange={(e) => setNewPrefixe(e.target.value)}
                         />
                     </label>
                     <label className="label">
@@ -76,15 +100,16 @@ function CreateService() {
                         <input
                             type="string"
                             className="input"
-                            value={logo}
-                            onChange={(e) => setLogo(e.target.value)}
+                            value={newLogo}
+                            onChange={(e) => setNewLogo(e.target.value)}
                         />
                     </label>
+                    <div className="botones">
+                        <button className="boton boton--negro" type="submit">Create</button>
+                        <button className="boton boton--gris">Cancel</button>
+                    </div>
                 </form>
-                <div className="botones">
-                    <button className="boton boton--negro" type="submit">Create</button>
-                    <button className="boton boton--gris">Cancel</button>
-                </div>
+
             </div>
             <div className="card">
                 <h1>Update Service</h1>
@@ -93,7 +118,7 @@ function CreateService() {
                         Service Name
                         <div>
                             <select className="input" value={name} onChange={e => onChange(e, 'service')}>
-                                {ServiceOptions.map(option => <option value={option}>{option}</option>)}
+                                {serviceOptions.map(option => <option key={option.id} value={option.id}>{option.name}</option>)}
                             </select>
                         </div>
                     </label>

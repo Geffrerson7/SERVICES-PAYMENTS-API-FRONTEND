@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom"
+import userRole from '../../services/userRole';
 
 function Login() {
     const [username, setUsername] = useState('');
@@ -21,7 +22,8 @@ function Login() {
         const data = await response.json();
         if (response.status === 200) {
             localStorage.setItem('authTokens', JSON.stringify(data));
-            localStorage.setItem('username', JSON.stringify(username));
+            const userData = await userRole(username)
+            localStorage.setItem('userData', JSON.stringify(userData));
             navigate("/");
         } else {
             Swal.fire({
