@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom"
-import userRole from '../../services/userRole';
+import user from '../../services/user';
 
 function Login() {
     const [username, setUsername] = useState('');
@@ -22,7 +22,7 @@ function Login() {
         const data = await response.json();
         if (response.status === 200) {
             localStorage.setItem('authTokens', JSON.stringify(data));
-            const userData = await userRole(username)
+            const userData = await user(data.user_id)
             localStorage.setItem('userData', JSON.stringify(userData));
             navigate("/");
         } else {
