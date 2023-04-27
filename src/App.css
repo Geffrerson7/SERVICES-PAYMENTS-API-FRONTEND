@@ -103,3 +103,10 @@
   @apply bg-gradient-to-r from-gray-700 via-gray-200 to-gray-200 px-4 py-3 flex justify-between;
 }
 
+.boton-login {
+  @apply text-sm font-bold py-1 w-full rounded-full;
+}
+
+.boton-register {
+  @apply text-sm font-bold py-1 w-full rounded-full;
+}

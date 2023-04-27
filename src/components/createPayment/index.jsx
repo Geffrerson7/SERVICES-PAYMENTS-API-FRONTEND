@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"
+import refreshToken from "../../services/refreshToken";
 
 function CreatePayment() {
     const [service, setService] = useState("");
@@ -8,19 +9,36 @@ function CreatePayment() {
     const [cachedData, setCachedData] = useState({});
     const [serviceOptions, setServiceOptions] = useState([])
     const authTokens = JSON.parse(localStorage.getItem("authTokens"));
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    const [accessToken, setAccessToken] = useState(authTokens.access);
+    const today = new Date().toISOString().replace('T', ' ').slice(0, 19);
     const navigate = useNavigate();
+    let PAYMENT_BASE_URL = "http://127.0.0.1:8000/payment/"
+    let SERVICE_BASE_URL = "http://127.0.0.1:8000/service/"
+
+    if (userData.is_superuser) {
+        PAYMENT_BASE_URL = "http://127.0.0.1:8000/payment/crud/"
+        SERVICE_BASE_URL = "http://127.0.0.1:8000/service/crud"
+    }
 
     useEffect(() => {
+        
         const fetchServices = async () => {
+
+            if (userData.expirated_date === today) {
+                const newAccessToken = await refreshToken(authTokens.refresh)
+                setAccessToken(newAccessToken);
+            }
+
             if (cachedData.serviceOptions) {
                 setServiceOptions(cachedData.serviceOptions)
             } else {
-                const response = await fetch("http://127.0.0.1:8000/service/", {
+                const response = await fetch(SERVICE_BASE_URL, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
                         "Accept": "application/json",
-                        "Authorization": "Bearer " + authTokens?.access,
+                        "Authorization": "Bearer " + accessToken,
                     },
                 });
                 const data = await response.json();
@@ -29,16 +47,21 @@ function CreatePayment() {
             }
         }
         fetchServices();
-    }, [authTokens, cachedData])
+    }, [authTokens, cachedData, userData])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let response = await fetch("http://127.0.0.1:8000/payment/", {
+        if (userData.expirated_date === today) {
+            const newAccessToken = await refreshToken(authTokens.refresh)
+            setAccessToken(newAccessToken);
+        }
+
+        let response = await fetch(PAYMENT_BASE_URL, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Authorization': 'Bearer ' + authTokens?.access
+                'Authorization': 'Bearer ' + accessToken
             },
             body: JSON.stringify({
                 service: service,

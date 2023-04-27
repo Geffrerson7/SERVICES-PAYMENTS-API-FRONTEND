@@ -73,8 +73,8 @@ const Register = () => {
                     </label>
                     
                     <div className="flex flex-col items-center">
-                        <button className="boton bg-primaryDark text-dark mb-2" type="submit">Register</button>
-                        <button className="boton bg-primary text-light" onClick={() => navigate('/login')}>Cancel</button>
+                        <button className="boton-login bg-primaryDark text-dark mb-2" type="submit">Register</button>
+                        <button className="boton-register bg-primary text-light" onClick={() => navigate('/login')}>Cancel</button>
                     </div>
                 </form>
             </div>

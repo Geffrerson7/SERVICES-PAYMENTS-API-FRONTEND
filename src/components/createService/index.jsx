@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"
+import refreshToken from "../../services/refreshToken";
 
 function CreateService() {
     const [newName, setNewName] = useState("");
@@ -10,50 +11,60 @@ function CreateService() {
     const [serviceOptions, setServiceOptions] = useState([])
     const [selectedService, setSelectedService] = useState({});
     const authTokens = JSON.parse(localStorage.getItem("authTokens"));
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    const [accessToken, setAccessToken] = useState(authTokens.access);
+    const today = new Date().toISOString().replace('T', ' ').slice(0, 19);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            let res = await fetch("http://127.0.0.1:8000/service/crud/", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + authTokens?.access
-                },
-                body: JSON.stringify({
-                    name: newName,
-                    prefixe: newPrefixe,
-                    logo: newLogo,
-                }),
-            }).then((response) => {
-                if (response.ok) {
-                    Swal.fire(
-                        'Created!',
-                        'The service was created successfully.',
-                        'success'
-                    ).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
-                    })
-                }
-                else {
-                    Swal.fire({
-                        icon: "error",
-                        title: 'Oops...',
-                        text: "An error occurred!"
-                    })
-                }
-            });
-        } catch (err) {
-            console.log(err);
+
+        if (userData.expirated_date === today) {
+            const newAccessToken = await refreshToken(authTokens.refresh)
+            setAccessToken(newAccessToken);
         }
+
+        let res = await fetch("http://127.0.0.1:8000/service/crud/", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + accessToken
+            },
+            body: JSON.stringify({
+                name: newName,
+                prefixe: newPrefixe,
+                logo: newLogo,
+            }),
+        }).then((response) => {
+            if (response.ok) {
+                Swal.fire(
+                    'Created!',
+                    'The service was created successfully.',
+                    'success'
+                ).then((result) => {
+                    if (result.isConfirmed) {
+                        location.reload();
+                    }
+                })
+            }
+            else {
+                Swal.fire({
+                    icon: "error",
+                    title: 'Oops...',
+                    text: "An error occurred!"
+                })
+            }
+        });
     };
 
     useEffect(() => {
         const fetchServices = async () => {
+            if (userData.expirated_date === today) {
+                const newAccessToken = await refreshToken(authTokens.refresh)
+                setAccessToken(newAccessToken);
+            }
+
             if (cachedData.serviceOptions) {
                 setServiceOptions(cachedData.serviceOptions)
             } else {
@@ -62,7 +73,7 @@ function CreateService() {
                     headers: {
                         "Content-Type": "application/json",
                         "Accept": "application/json",
-                        "Authorization": "Bearer " + authTokens?.access,
+                        "Authorization": "Bearer " + accessToken,
                     },
                 });
                 const data = await response.json();
@@ -71,7 +82,7 @@ function CreateService() {
             }
         }
         fetchServices();
-    }, [authTokens, cachedData])
+    }, [authTokens, cachedData, userData])
 
     const handleSelectChange = (event) => {
         const selectedId = parseInt(event.target.value);
@@ -92,12 +103,16 @@ function CreateService() {
 
     const updateHandleSubmit = async (e) => {
         e.preventDefault();
+        if (userData.expirated_date === today) {
+            const newAccessToken = await refreshToken(authTokens.refresh)
+            setAccessToken(newAccessToken);
+        }
         await fetch(`http://127.0.0.1:8000/service/crud/${serviceId}/`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
                 Accept: "application/json",
-                Authorization: "Bearer " + authTokens?.access,
+                Authorization: "Bearer " + accessToken,
             },
             body: JSON.stringify(selectedService),
         }).then((response) => {
