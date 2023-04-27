@@ -38,10 +38,10 @@ function List() {
     
   return (
     <div>
+      <h1 className="text-md font-semibold text-gray-900 uppercase mt-4">Payments</h1>
       {payments.map((payment) => (
         <Payment key={payment.id} payment={payment} />
       ))}
-      
     </div>
   );
 }

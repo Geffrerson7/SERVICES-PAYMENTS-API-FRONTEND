@@ -36,6 +36,7 @@ function ExpiratedList() {
 
     return (
         <div>
+            <h1 className="text-md font-semibold text-gray-900 uppercase mt-4">Expirated Payments</h1>
             {expiratedPayments.map((expiratedPayment) => (
                 <ExpiratedPayment key={expiratedPayment.id} expiratedPayment={expiratedPayment} />
             ))}

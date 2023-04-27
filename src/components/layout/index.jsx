@@ -7,7 +7,6 @@ function Layout() {
         <>
             <Header></Header>
             <Principal>
-                
                 <Outlet></Outlet>
             </Principal>
             <Footer></Footer>

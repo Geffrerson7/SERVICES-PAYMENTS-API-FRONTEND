@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"
 
 function CreateService() {
     const [newName, setNewName] = useState("");
@@ -9,8 +10,9 @@ function CreateService() {
     const [serviceOptions, setServiceOptions] = useState([])
     const [selectedService, setSelectedService] = useState({});
     const authTokens = JSON.parse(localStorage.getItem("authTokens"));
+    const navigate = useNavigate();
 
-    let handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             let res = await fetch("http://127.0.0.1:8000/service/crud/", {
@@ -81,17 +83,14 @@ function CreateService() {
     const handleInputChange = (event) => {
 
         const { value, name } = event.target;
-        
-        setSelectedService((prevData) => ({
-          ...prevData,
-          [name]: value,
-        }));
-        
-      };
-      
-      
 
-    let updateHandleSubmit = async (e) => {
+        setSelectedService((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    const updateHandleSubmit = async (e) => {
         e.preventDefault();
         await fetch(`http://127.0.0.1:8000/service/crud/${serviceId}/`, {
             method: "PUT",
@@ -109,7 +108,6 @@ function CreateService() {
                     }
                 });
             } else {
-                
                 Swal.fire({
                     icon: "error",
                     title: "Oops...",
@@ -121,8 +119,8 @@ function CreateService() {
 
     return (
         <>
+            <h1 className="text-md font-semibold text-gray-900 uppercase mt-4">Create Service</h1>
             <div className="card">
-                <h1>Create Service</h1>
                 <form className="p-4" onSubmit={handleSubmit}>
                     <label className="label">
                         Name
@@ -151,15 +149,15 @@ function CreateService() {
                             onChange={(e) => setNewLogo(e.target.value)}
                         />
                     </label>
-                    <div className="botones">
-                        <button className="boton boton--negro" type="submit">Create</button>
-                        <button className="boton boton--gris">Cancel</button>
+                    <div className="px-4 py-3 flex justify-between">
+                        <button className="boton bg-primary text-light" type="submit">Create</button>
+                        <button className="boton bg-primaryDark" onClick={() => navigate('/')}>Cancel</button>
                     </div>
                 </form>
 
             </div>
+            <h1 className="text-md font-semibold text-gray-900 uppercase mt-4">Update Service</h1>
             <div className="card">
-                <h1>Update Service</h1>
                 <form className="p-4" onSubmit={updateHandleSubmit}>
                     <label className="label" htmlFor="service">
                         Service Name
@@ -167,7 +165,6 @@ function CreateService() {
                             {serviceOptions.map((option) => (<option key={option.id} value={option.id}>{option.name}</option>))}
                         </select>
                     </label>
-
                     {selectedService && (
                         <>
                             <label className="label" htmlFor="name">
@@ -203,15 +200,13 @@ function CreateService() {
                                     defaultValue={selectedService.logo}
                                 />
                             </label>
-
                         </>
                     )}
-                    <div className="botones">
-                        <button className="boton boton--negro" type="submit">Update</button>
-                        <button className="boton boton--gris">Cancel</button>
+                    <div className="px-4 py-3 flex justify-between">
+                        <button className="boton bg-primary text-light" type="submit">Update</button>
+                        <button className="boton bg-primaryDark" onClick={() => navigate('/')}>Cancel</button>
                     </div>
                 </form>
-
             </div>
         </>
     );
