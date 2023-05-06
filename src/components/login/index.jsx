@@ -37,7 +37,7 @@ function Login() {
     return (
         <div className="h-screen flex items-center justify-center">
             <div className="card shadow-lg w-[30%] m-auto">
-                <form className="p-4" onSubmit={handleSubmit}>
+                <form className="p-8" onSubmit={handleSubmit}>
                     <label className="label">
                         Username:
                         <input
@@ -52,8 +52,8 @@ function Login() {
                             className="input"
                             value={password} onChange={(e) => setPassword(e.target.value)} />
                     </label>
-                    <div className="flex flex-col items-center">
-                        <button className="boton-login bg-primaryDark text-dark mb-2" type="submit">Login</button>
+                    <div className="flex flex-col items-center mt-12">
+                        <button className="boton-login bg-primaryDark text-dark mb-4" type="submit">Login</button>
                         <button className="boton-register bg-primary text-light" onClick={() => navigate('/register')}>Register</button>
                     </div>
                 </form>
