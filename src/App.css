@@ -62,7 +62,7 @@
 }
 
 .name-service {
-  @apply text-sm ml-5;
+  @apply text-sm ml-5 text-sky-600;
 }
 
 /* Global */
@@ -120,4 +120,12 @@
 
 .boton--red {
   @apply text-white bg-red-500 hover:bg-red-700;
+}
+
+.boton--sky {
+  @apply text-white bg-sky-500 hover:bg-sky-700;
+}
+
+.boton--yellow {
+  @apply text-black ml-5 bg-amber-200 hover:bg-amber-400;
 }

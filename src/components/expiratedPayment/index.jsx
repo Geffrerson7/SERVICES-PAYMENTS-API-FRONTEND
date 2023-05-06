@@ -5,11 +5,11 @@ function ExpiratedPayment({ expiratedPayment }) {
                 <div className="icon-service">
                     <img src={expiratedPayment.service_logo}></img>
                 </div>
-                <p className="name-service">{expiratedPayment.service}</p>
+                <button className="boton boton--yellow">{expiratedPayment.service}</button>
             </div>
             <div className="flex items-center justify-center">
                 <div className="mr-80">
-                    <p className="text-center">{expiratedPayment.paymentDate}</p>
+                    <button className="boton boton--sky">{expiratedPayment.paymentDate}</button>
                 </div>
                 <div className="mr-40">
                     <button className="boton boton--green">S/. {expiratedPayment.amount}</button>

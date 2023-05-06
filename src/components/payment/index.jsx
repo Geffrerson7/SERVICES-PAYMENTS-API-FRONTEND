@@ -5,12 +5,12 @@ function Payment({ payment }) {
                 <div className="icon-service">
                     <img src={payment.service_logo}></img>
                 </div>
-                <p className="name-service">{payment.service}</p>
+                <button className="boton boton--yellow">{payment.service}</button>
             </div>
             
             <div className="flex items-center justify-center">
                 <div className="mr-80">
-                    <p className="text-center">{payment.paymentDate}</p>
+                    <button className="boton boton--sky">{payment.paymentDate}</button>
                 </div>
                 <div className="relative m-2 mx-5 ml-40">
                     <button className="boton boton--green">S/. {payment.amount}</button>
