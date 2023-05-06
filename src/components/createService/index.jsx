@@ -177,6 +177,7 @@ function CreateService() {
                     <label className="label" htmlFor="service">
                         Service Name
                         <select id="service" className="input" onChange={handleSelectChange}>
+                        <option value="">Select service</option>
                             {serviceOptions.map((option) => (<option key={option.id} value={option.id}>{option.name}</option>))}
                         </select>
                     </label>

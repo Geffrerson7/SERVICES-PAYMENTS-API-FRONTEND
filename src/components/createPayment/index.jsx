@@ -100,6 +100,7 @@ function CreatePayment() {
                         Service Name
                         <div>
                             <select className="input" value={service} onChange={(e) => setService(e.target.value)}>
+                            <option value="">Select service</option>
                                 {serviceOptions.map(option => <option key={option.id} value={option.name}>{option.name}</option>)}
                             </select>
                         </div>
