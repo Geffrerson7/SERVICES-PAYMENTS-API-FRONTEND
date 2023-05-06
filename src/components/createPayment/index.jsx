@@ -94,8 +94,8 @@ function CreatePayment() {
     return (
         <>
             <h1 className="text-md font-semibold text-gray-900 uppercase mt-4">Create Payment</h1>
-            <div className="card">
-                <form className="p-4" onSubmit={handleSubmit}>
+            <div className="form-card">
+                <form className="p-4 mx-2" onSubmit={handleSubmit}>
                     <label className="label">
                         Service Name
                         <div>
