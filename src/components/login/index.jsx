@@ -25,6 +25,7 @@ function Login() {
             const userData = await user(data.user_id)
             localStorage.setItem('userData', JSON.stringify(userData));
             navigate("/");
+            window.location.reload();
         } else {
             Swal.fire({
                 icon: "error",
