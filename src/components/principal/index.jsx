@@ -1,7 +1,6 @@
 import { ReactComponent as PaymentListSVG } from '../../assets/img/lista.svg'
 import { ReactComponent as CreatePaymentSVG } from '../../assets/img/payment.svg'
 import { ReactComponent as ServicesSVG } from '../../assets/img/services.svg'
-import { ReactComponent as LogoutSVG } from '../../assets/img/logout.svg'
 import { ReactComponent as ExpiratedPaymentListSVG } from '../../assets/img/expirated-payment.svg'
 import WebLink from "../Link";
 import Logout from '../Logout'

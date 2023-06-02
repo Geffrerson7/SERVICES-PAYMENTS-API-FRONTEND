@@ -1,7 +1,7 @@
 function Footer(){
     return (
         <footer className="foot">
-            <small>Developed and designed by Gefferson Casasola. ©2023. All rights reserved.</small>
+            <small>Developed and designed by Gefferson Casasola. &copy;{new Date().getFullYear()}. All rights reserved.</small>
         </footer>
     );
 }
